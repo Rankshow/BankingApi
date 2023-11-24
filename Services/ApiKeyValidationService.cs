@@ -1,4 +1,4 @@
-
+// using BankingApi.Constant;
 using BankingApi.Interfaces;
 
 namespace BankingApi.Services
@@ -18,7 +18,7 @@ namespace BankingApi.Services
             }
             else
             {
-                var key = _configuration.GetValue<string>(Constant.AppConstant.ApiKeyHeaderName);
+                var key = _configuration.GetValue<string>(Constant.AppConstant.ApiKeyName);
                 return Convert.ToBoolean(key?.Equals(userApiKey));
             }
             

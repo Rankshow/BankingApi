@@ -1,5 +1,4 @@
 using System.Net;
-using BankingApi.Constant;
 using BankingApi.Interfaces;
 using Newtonsoft.Json;
 
@@ -14,7 +13,7 @@ namespace BankingApi.Middleware
         }
         public Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var headerKey = context.Request.Headers[AppConstant.ApiKeyHeaderName].ToString();
+            var headerKey = context.Request.Headers[Constant.AppConstant.ApiKeyHeaderName].ToString();
 
             if(!_apiKeyValidationService.IsValidApiKey(headerKey))
             {
