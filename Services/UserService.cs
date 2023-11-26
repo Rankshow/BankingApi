@@ -6,18 +6,18 @@ namespace BankingApi.Services
     public class UserService : IUserService
     {
         private readonly List<User> _users;
-        public UserService(List<User> users)
+        public UserService()
         {
-            _users = users;
-        }
-        public User GetCredentials(string username)
-        {
-            throw new NotImplementedException();
+            _users = UserDb.users;
         }
 
-        public bool IsCredentialsvalid(string userName, string password)
+        public User GetCredentials(string username)
         {
-            throw new NotImplementedException();
+           return _users.Where(s => s.Username == username).First();
+        }
+        public bool IsCredentialsvalid(string username, string password)
+        {
+           return _users.Any(p => p.Username == username && p.Password == password);
         }
     }
 }

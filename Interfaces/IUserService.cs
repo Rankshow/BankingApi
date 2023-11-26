@@ -4,7 +4,7 @@ namespace BankingApi.Interfaces
 {
     public interface IUserService
     {
-       bool IsCredentialsvalid(string userName, string password);
+       bool IsCredentialsvalid(string username, string password);
        User GetCredentials(string username);
     }
 }

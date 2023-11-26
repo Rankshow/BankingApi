@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BankingApi.Identity;
 
 namespace BankingApi.Providers
 {
-    public class IJwtProvider
+    public interface IJwtProvider
     {
-        
+        string Generate (User user);
     }
 }

@@ -1,13 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace BankingApi.Identity
 {
     public class UserDb
     {
-        List<User> users = new List<User>();
-        
+       public static List<User> users = new ()
+       {
+            new User()
+            {
+                FirstName = "Obinna Nick",
+                Email = "johndro@gmail.com",
+                Username = "Rankshoe",
+                Password = "ranks3674"
+            },
+            new User()
+            {
+                FirstName = "bart Doe",
+                Email = "philro@gmail.com",
+                Username = "phili",
+                Password = "Philf74"
+            },
+       };
     }
 }
