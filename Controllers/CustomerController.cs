@@ -1,12 +1,14 @@
 using BankingApi.Interfaces;
 using BankingApi.Models;
 using BankingApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankingApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
@@ -24,6 +26,7 @@ namespace BankingApi.Controllers
         
         [HttpGet]
         [Route("AllCustomers")]
+        [Authorize(Roles = "Admin")]
         public List<Customer> GetCustomers()
         {
             return _customerService.GetCustomers();
