@@ -31,7 +31,8 @@ namespace BankingApi.Providers
            var claim = new Claim[]
            {
                 new (ClaimTypes.Email, user.Email ?? string.Empty),
-                new (ClaimTypes.Name, user.FirstName ?? string.Empty)
+                new (ClaimTypes.Name, user.FirstName ?? string.Empty),
+                new (ClaimTypes.Role, user.Role ?? string.Empty)
            };
             var SigningKey = new SigningCredentials( new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SigningKey ?? string.Empty)), 
             SecurityAlgorithms.HmacSha256);

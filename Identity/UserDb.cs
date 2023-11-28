@@ -9,14 +9,16 @@ namespace BankingApi.Identity
                 FirstName = "Obinna Nick",
                 Email = "johndro@gmail.com",
                 Username = "Rankshoe",
-                Password = "ranks3674"
+                Password = "ranks3674",
+                Role = "Admin"
             },
             new User()
             {
                 FirstName = "bart Doe",
                 Email = "philro@gmail.com",
                 Username = "phili",
-                Password = "Philf74"
+                Password = "Philf74",
+                Role = "Ceo"
             },
        };
     }

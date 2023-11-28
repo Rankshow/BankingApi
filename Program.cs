@@ -2,22 +2,37 @@ using BankingApi.Interfaces;
 using BankingApi.Middleware;
 using BankingApi.Providers;
 using BankingApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add serilog configuration
-// builder.Host.UseSerilog((context, configuration) => 
-//     configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddSingleton<IAccountService, AccountService>();
-// builder.Services.AddSingleton<ITransactionService, TransactionService>();
-// builder.Services.AddSingleton<IApiKeyValidationService, ApiKeyValidationService>();
-// builder.Services.AddSingleton<ApiKeyMiddleware>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
+        ValidAudience = builder.Configuration["JwtOptions:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:Signingkey"] ?? string.Empty)
+        )
+    };
+});
+
 
 var options = new JwtOptions();
 builder.Configuration.GetSection("JwtOptions").Bind(options);
@@ -39,9 +54,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-// app.UseSerilogRequestLogging();
-// app.UseMiddleware<ApiKeyMiddleware>();
 
 app.MapControllers();
 

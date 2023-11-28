@@ -1,15 +1,18 @@
 using System.Net;
+using BankingApi.Identity;
 using BankingApi.Dto;
 using BankingApi.Dto.Account;
 using BankingApi.Extension;
 using BankingApi.Interfaces;
 using BankingApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankingApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -40,6 +43,7 @@ namespace BankingApi.Controllers
 
         [HttpGet]
         [Route("All")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<Account>> GetAccounts()
         {
             _logger.LogInformation("Executing GetAccounts");
@@ -53,7 +57,7 @@ namespace BankingApi.Controllers
             _logger.LogInformation("Executing GetById");
             if(_accountService.IsExist(accountId))
             {
-                return NotFound($"The accpouny Id { accountId } is not found");
+                return NotFound($"The account Id { accountId } is not found");
             }
             else
             {
